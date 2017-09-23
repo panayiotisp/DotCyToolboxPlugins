@@ -1060,7 +1060,7 @@ namespace DotCyToolboxPlugins.Controls {
                 }
 
                 // filter by entity name
-                return oModPrivileges.Where(x => oSelectedGroup.Values.Contains(x.Name)).ToList();
+                return oModPrivileges.Where(x => oSelectedGroup.Values.Contains(x.Name) || oSelectedGroup.Values.Contains(x.ObjectTypeCode)).ToList();
             }
 
             // return the filtered privileges
