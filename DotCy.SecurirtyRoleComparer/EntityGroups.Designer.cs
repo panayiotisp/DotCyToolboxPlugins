@@ -89,8 +89,7 @@ namespace DotCyToolboxPlugins {
         ///prvExportToExcel
         ///prvMailMerge
         ///prvActOnBehalfOfAnotherUser
-        ///prvActOnBehalfOfExternalParty
-        /// [rest of string was truncated]&quot;;.
+        ///prvActOnBehalfOfExternalParty        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BusinessManagement {
             get {
