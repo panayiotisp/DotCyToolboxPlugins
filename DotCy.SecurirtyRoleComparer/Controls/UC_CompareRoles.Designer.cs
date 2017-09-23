@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UC_CompareRoles));
             this.scRoleControls = new System.Windows.Forms.SplitContainer();
             this.cblRoles = new System.Windows.Forms.CheckedListBox();
             this.pnCompareRoles = new System.Windows.Forms.Panel();
@@ -33,10 +32,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbPermissionGroup = new System.Windows.Forms.ComboBox();
             this.tsMainToolbar = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbutClose = new System.Windows.Forms.ToolStripButton();
             this.tbutLoadRoles = new System.Windows.Forms.ToolStripButton();
             this.tbutCompareSelected = new System.Windows.Forms.ToolStripButton();
-            this.tbutClose = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.scRoleControls)).BeginInit();
             this.scRoleControls.Panel1.SuspendLayout();
             this.scRoleControls.Panel2.SuspendLayout();
@@ -154,9 +153,25 @@
             this.tsMainToolbar.TabIndex = 2;
             this.tsMainToolbar.Text = "Main Toolbar";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tbutClose
+            // 
+            this.tbutClose.AutoToolTip = false;
+            this.tbutClose.Image = global::DotCyToolboxPlugins.Properties.Resources.close16;
+            this.tbutClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbutClose.Name = "tbutClose";
+            this.tbutClose.Size = new System.Drawing.Size(56, 22);
+            this.tbutClose.Text = "Close";
+            this.tbutClose.ToolTipText = "Close Plugin tool";
+            this.tbutClose.Click += new System.EventHandler(this.tbutClose_Click);
+            // 
             // tbutLoadRoles
             // 
-            this.tbutLoadRoles.Image = ((System.Drawing.Image)(resources.GetObject("tbutLoadRoles.Image")));
+            this.tbutLoadRoles.Image = global::DotCyToolboxPlugins.Properties.Resources.refresh16;
             this.tbutLoadRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbutLoadRoles.Name = "tbutLoadRoles";
             this.tbutLoadRoles.Size = new System.Drawing.Size(90, 22);
@@ -166,29 +181,13 @@
             // tbutCompareSelected
             // 
             this.tbutCompareSelected.Enabled = false;
-            this.tbutCompareSelected.Image = ((System.Drawing.Image)(resources.GetObject("tbutCompareSelected.Image")));
+            this.tbutCompareSelected.Image = global::DotCyToolboxPlugins.Properties.Resources.compare16;
             this.tbutCompareSelected.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbutCompareSelected.Name = "tbutCompareSelected";
             this.tbutCompareSelected.Size = new System.Drawing.Size(154, 22);
             this.tbutCompareSelected.Text = "Compare Selected Roles";
             this.tbutCompareSelected.ToolTipText = "Compare Selected Roles";
             this.tbutCompareSelected.Click += new System.EventHandler(this.tbutCompareSelected_Click);
-            // 
-            // tbutClose
-            // 
-            this.tbutClose.AutoToolTip = false;
-            this.tbutClose.Image = ((System.Drawing.Image)(resources.GetObject("tbutClose.Image")));
-            this.tbutClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbutClose.Name = "tbutClose";
-            this.tbutClose.Size = new System.Drawing.Size(56, 22);
-            this.tbutClose.Text = "Close";
-            this.tbutClose.ToolTipText = "Close Plugin tool";
-            this.tbutClose.Click += new System.EventHandler(this.tbutClose_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // UC_CompareRoles
             // 

@@ -172,7 +172,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\close16.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bu.gif" />
   </ItemGroup>
@@ -188,10 +190,17 @@
   <ItemGroup>
     <None Include="Resources\user.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\compare16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y DotCyToolboxPlugins*.dll Plugins
-copy /Y DotCyToolboxPlugins*.pdb Plugins
+    <PostBuildEvent>IF NOT EXIST Plugins mkdir Plugins
+copy /Y DotCyToolboxPlugins*.dll .\Plugins\
+copy /Y DotCyToolboxPlugins*.pdb .\Plugins\
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

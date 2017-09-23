@@ -33,7 +33,7 @@ namespace DotCyToolboxPlugins.DAL {
 
 
         public override string ToString() {
-            return (this.BusinessUnitName ?? "") + ": " + (this.Name ?? "");
+            return (this.BusinessUnitName ?? "") + "\\" + (this.Name ?? "");
         }
 
     } // Class: SecurityRoleType

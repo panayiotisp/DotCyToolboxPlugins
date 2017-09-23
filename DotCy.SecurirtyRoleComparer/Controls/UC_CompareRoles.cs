@@ -14,11 +14,12 @@ using XrmToolBox.Extensibility.Interfaces;
 using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
 using XrmToolBox.Extensibility;
+using XrmToolBox.Extensibility.Args;
 
 
 namespace DotCyToolboxPlugins.Controls {
 
-    public partial class UC_CompareRoles : PluginControlBase, IXrmToolBoxPluginControl, IGitHubPlugin {
+    public partial class UC_CompareRoles : PluginControlBase, IXrmToolBoxPluginControl, IGitHubPlugin, IPayPalPlugin, IHelpPlugin, IStatusBarMessenger {
 
         /// <summary>
         /// Executed when the security roles loading process completes
@@ -167,6 +168,11 @@ namespace DotCyToolboxPlugins.Controls {
                     ProgressChanged = e => {
                         // If progress has to be notified to user, use the following method:
                         SetWorkingMessage("Loading Roles..");
+
+                        if (SendMessageToStatusBar != null && e.ProgressPercentage >= 100)
+                            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(100, $"Loaded {(SecurityRoles?.Count).GetValueOrDefault(0)} Roles"));
+                        else
+                            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(e.ProgressPercentage, "Loading Roles.."));
                     },
                     PostWorkCallBack = e => {
                         // update the UI
@@ -228,7 +234,6 @@ namespace DotCyToolboxPlugins.Controls {
             }).ToList();
 
             workerThread.ReportProgress(101, "Retrieving Roles...");
-
             return SecurityRoles;
         }
         #endregion
@@ -269,6 +274,7 @@ namespace DotCyToolboxPlugins.Controls {
             try {
                 // load the roles in the checkbox list control
                 if (SecurityRoles?.Count > 0) {
+                    cblRoles.Items.Clear();
                     cblRoles.Items.AddRange(SecurityRoles.ToArray());
                 }
             } catch (System.Exception ex) {
@@ -294,8 +300,8 @@ namespace DotCyToolboxPlugins.Controls {
                 wbSecurityRolePriv.DocumentText = "";
 
                 // check if any security role was selected
-                if (cblRoles.CheckedItems.Count < 1) {
-                    MessageBox.Show("No Security Roles were selected.");
+                if (cblRoles.CheckedItems.Count < 2) {
+                    MessageBox.Show("At least two (2) Security Roles need to be selected for a Comparison.");
 
                     // re-enable the controls
                     cblRoles.Enabled = true;
@@ -313,7 +319,7 @@ namespace DotCyToolboxPlugins.Controls {
                 // start the loading process for the role security privileges
                 // start the loading process
                 WorkAsync(new WorkAsyncInfo {
-                    Message = "Retrieving Selected Role Privileges for Comparisson",
+                    Message = "Retrieving Selected Role Privileges for Comparison",
                     Work = (w, e) => {
                         // retrieve the privileges
                         e.Result = LoadSecurityRolesPriviledgesWork(w, e);
@@ -321,6 +327,11 @@ namespace DotCyToolboxPlugins.Controls {
                     ProgressChanged = e => {
                         // If progress has to be notified to user, use the following method:
                         SetWorkingMessage("Loading Role Privileges..");
+
+                        if (SendMessageToStatusBar != null && e.ProgressPercentage >= 100)
+                            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(100, $"Loaded Privileges for {(ComparedRoleIDs?.Count).GetValueOrDefault(0)} Roles"));
+                        else
+                            SendMessageToStatusBar(this, new StatusBarMessageEventArgs(e.ProgressPercentage, "Loading Role Privileges.."));
                     },
                     PostWorkCallBack = e => {
                         // update the UI
@@ -1076,10 +1087,6 @@ namespace DotCyToolboxPlugins.Controls {
         #region Method: UpdateConnection (public- override)
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail connectionDetail, string actionName = "", object parameter = null) {
             base.UpdateConnection(newService, connectionDetail, actionName, parameter);
-
-            // re-load the list of roles
-            if (newService != null)
-                ExecuteMethod(this.LoadListOfRoles);
         }
         #endregion
 
@@ -1146,9 +1153,23 @@ namespace DotCyToolboxPlugins.Controls {
             info.Silent = true;
         }
 
-        string IGitHubPlugin.RepositoryName => throw new NotImplementedException();
+        #region IGitHubPlugin Interface implementation
+        string IGitHubPlugin.RepositoryName => "DotCyToolboxPlugins";
+        string IGitHubPlugin.UserName => "panayiotisp";
+        #endregion
 
-        string IGitHubPlugin.UserName => throw new NotImplementedException();
+        #region IPayPalPlugin Interface implementation
+        string IPayPalPlugin.DonationDescription => "XRMToolBox Donation";
+        string IPayPalPlugin.EmailAccount => "panayiotis@dotcy.com.cy";
+        #endregion
+
+        #region IHelpPlugin Interface implementation
+        string IHelpPlugin.HelpUrl => "https://github.com/panayiotisp/DotCyToolboxPlugins";
+        #endregion
+
+        #region IHelpPlugin Interface implementation
+        public event EventHandler<StatusBarMessageEventArgs> SendMessageToStatusBar;
+        #endregion
 
     } // Class: UC_CompareRoles
 
