@@ -442,18 +442,18 @@ namespace DotCyToolboxPlugins.Controls {
 
         #region Method: BuildCompareRolesUI
         private void BuildCompareRolesUI() {
-            // make sure the necessary data is loaded before attempting to build the table
-            if ((ComparedRoleIDs.Count == 0) ||
-                ((PrivilegesPerRole?.Count).GetValueOrDefault(0) < 1) ||
-                ((SecurityRoles?.Count).GetValueOrDefault(0) < 1) ||
-                ((Privileges?.Count).GetValueOrDefault(0) < 1)) {
-                return;
-            }
-
             if (this.InvokeRequired)
                 this.BeginInvoke(new Action(BuildCompareRolesUI));
 
             try {
+                // make sure the necessary data is loaded before attempting to build the table
+                if ((ComparedRoleIDs.Count == 0) ||
+                    (PrivilegesPerRole == null) ||
+                    ((SecurityRoles?.Count).GetValueOrDefault(0) < 1) ||
+                    ((Privileges?.Count).GetValueOrDefault(0) < 1)) {
+                    return;
+                }
+
                 // create the initial HTML page code with the body
                 var oSB = new StringBuilder();
                 oSB.AppendLine("<html lang='en'>");
@@ -604,7 +604,9 @@ namespace DotCyToolboxPlugins.Controls {
                     var lastRoleID = ComparedRoleIDs.Last();
                     foreach (var oRoleID in ComparedRoleIDs) {
                         var oRole = SecurityRoles.FirstOrDefault(r => r.ID == oRoleID);
-                        var oRolePriv = PrivilegesPerRole[oRoleID];
+                        if (!PrivilegesPerRole.TryGetValue(oRoleID, out List<RolePriviledgeType> oRolePriv)) {
+                            oRolePriv = new List<RolePriviledgeType>();
+                        }
                         var oTypeCodePrivileges = oRolePriv.Where(x => oPrivilegeIDs.Contains(x.PrivilegeID)).ToList();
 
                         string borderStyleStr = "wb";
@@ -740,7 +742,9 @@ namespace DotCyToolboxPlugins.Controls {
                         var lastRoleID = ComparedRoleIDs.Last();
                         foreach (var oRoleID in ComparedRoleIDs) {
                             var oRole = SecurityRoles.FirstOrDefault(r => r.ID == oRoleID);
-                            var oRolePriv = PrivilegesPerRole[oRoleID];
+                            if (!PrivilegesPerRole.TryGetValue(oRoleID, out List<RolePriviledgeType> oRolePriv)) {
+                                oRolePriv = new List<RolePriviledgeType>();
+                            }
                             var oTypeCodePrivileges = oRolePriv.Where(x => oSpecialPrivilegeIDs.Contains(x.PrivilegeID)).ToList();
 
                             string borderStyleStr = "wb";
