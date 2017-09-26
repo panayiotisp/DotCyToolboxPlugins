@@ -378,7 +378,7 @@ namespace DotCyToolboxPlugins.Controls {
                     AccessRight = oPriv.GetAttributeValue<int>("accessright").ToEnumSafe<AccessRightEnum>(),
                     CanBeBasic = oPriv.GetAttributeValue<Nullable<bool>>("canbebasic").GetValueOrDefault(false),
                     CanBeDeep = oPriv.GetAttributeValue<Nullable<bool>>("canbedeep").GetValueOrDefault(false),
-                    CanBeLocal = oPriv.GetAttributeValue<Nullable<bool>>("canbelocal").GetValueOrDefault(false),
+                    CanBeLocal = oPriv.GetAttributeValue<Nullable<bool>>("ecanbelocal").GetValueOrDefault(false),
                     CanBeGlobal = oPriv.GetAttributeValue<Nullable<bool>>("canbeglobal").GetValueOrDefault(false),
                     CanBeEntityReference = oPriv.GetAttributeValue<Nullable<bool>>("canbeentityreference").GetValueOrDefault(false),
                     CanBeParentEntityReference = oPriv.GetAttributeValue<Nullable<bool>>("canbeparententityreference").GetValueOrDefault(false)
